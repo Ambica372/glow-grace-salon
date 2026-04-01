@@ -301,5 +301,21 @@ document.querySelectorAll(".btn-detail").forEach(btn => {
 });
 </script>
 
+
+
+  <script>
+function trackService(serviceName) {
+  window.dataLayer = window.dataLayer || [];
+  dataLayer.push({
+    event: "service_click",
+    service_name: serviceName
+  });
+}
+</script>
+
+  
 </body>
 </html>
+
+
+
