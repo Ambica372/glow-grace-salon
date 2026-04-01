@@ -158,21 +158,6 @@ footer a {
 </style>
 
 </head>
-<script>
-document.querySelectorAll(".btn-book").forEach(btn => {
-  btn.addEventListener("click", () => {
-    alert("Booking started for " + btn.dataset.service);
-  });
-});
-
-document.getElementById("btn-hero-book").addEventListener("click", () => {
-  alert("Booking started from hero");
-});
-
-document.getElementById("btn-download").addEventListener("click", () => {
-  alert("Downloading brochure...");
-});
-</script>
 
 
 
@@ -278,41 +263,18 @@ allowfullscreen></iframe>
 
 
 
+
+
+
 <script>
-document.querySelectorAll(".btn-book").forEach(btn => {
-  btn.addEventListener("click", () => {
-    alert("Booking started for " + btn.dataset.service);
-  });
-});
-
-document.getElementById("btn-hero-book").addEventListener("click", () => {
-  alert("Booking started from hero");
-});
-
-document.getElementById("btn-download").addEventListener("click", () => {
-  alert("Downloading brochure...");
-});
-
-/* ? ADD THIS */
-document.querySelectorAll(".btn-detail").forEach(btn => {
-  btn.addEventListener("click", () => {
-    alert("Viewing details for " + btn.dataset.service);
-  });
-});
-</script>
-
-
-
-  <script>
 function trackService(serviceName) {
   window.dataLayer = window.dataLayer || [];
-  dataLayer.push({
+  window.dataLayer.push({
     event: "service_click",
     service_name: serviceName
   });
 }
 </script>
-
   
 </body>
 </html>
