@@ -235,7 +235,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="contact" id="contact">
   <h2>Contact Us</h2>
 
-  <form id="contact-form">
+  <form id="contact-form"
+    onsubmit="trackingFormSubmit()">
     <input type="text" placeholder="Name" required>
     <input type="email" placeholder="Email" required>
     <button type="submit">Submit</button>
@@ -272,6 +273,15 @@ function trackService(serviceName) {
   window.dataLayer.push({
     event: "service_click",
     service_name: serviceName
+  });
+}
+</script>
+<script>
+function trackFormSubmit() {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: "form_submit",
+    form_name: "contact_form"
   });
 }
 </script>
