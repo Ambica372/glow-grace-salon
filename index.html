@@ -234,7 +234,7 @@ document.addEventListener("DOMContentLoaded", function () {
       formStarted = true;
 
       dataLayer.push({
-        event: "form_start",
+        event: "form_interaction",
         form_name: "contact_form"
       });
     }
@@ -243,7 +243,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll("#contact-form input").forEach(input => {
     input.addEventListener("focus", function () {
       dataLayer.push({
-        event: "field_focus",
+        event: "form_interaction",
         field_name: this.name,
         form_name: "contact_form"
       });
@@ -253,7 +253,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll("#contact-form input").forEach(input => {
     input.addEventListener("invalid", function () {
       dataLayer.push({
-        event: "form_error",
+        event: "form_interaction",
         field_name: this.name,
         form_name: "contact_form"
       });
@@ -265,7 +265,7 @@ document.addEventListener("DOMContentLoaded", function () {
     formSubmitted = true;
 
     dataLayer.push({
-      event: "form_submit",
+      event: "form_interaction",
       form_name: "contact_form"
     });
 
@@ -274,7 +274,7 @@ document.addEventListener("DOMContentLoaded", function () {
   window.addEventListener("beforeunload", function () {
     if (formStarted && !formSubmitted) {
       dataLayer.push({
-        event: "form_abandon",
+        event: "form_interaction",
         form_name: "contact_form"
       });
     }
