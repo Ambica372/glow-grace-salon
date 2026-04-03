@@ -290,7 +290,7 @@ form.addEventListener("focusin", function () {
   if (!formStarted) {
     formStarted = true;
 
-    dataLayer.push({
+    window.dataLayer.push({
       event: "form_start",
       form_name: "contact_form"
     });
@@ -303,7 +303,7 @@ form.addEventListener("focusin", function () {
 ========================= */
 document.querySelectorAll("#contact-form input").forEach(input => {
   input.addEventListener("focus", function () {
-    dataLayer.push({
+    window.dataLayer.push({
       event: "field_focus",
       field_name: this.name || this.placeholder,
       form_name: "contact_form"
@@ -317,7 +317,7 @@ document.querySelectorAll("#contact-form input").forEach(input => {
 ========================= */
 document.querySelectorAll("#contact-form input").forEach(input => {
   input.addEventListener("invalid", function () {
-    dataLayer.push({
+    window.dataLayer.push({
       event: "form_error",
       field_name: this.name || this.placeholder,
       form_name: "contact_form"
@@ -330,7 +330,7 @@ document.querySelectorAll("#contact-form input").forEach(input => {
 4. FORM SUBMIT
 ========================= */
 form.addEventListener("submit", function () {
-  dataLayer.push({
+  window.dataLayer.push({
     event: "form_submit",
     form_name: "contact_form"
   });
@@ -342,7 +342,7 @@ form.addEventListener("submit", function () {
 ========================= */
 window.addEventListener("beforeunload", function () {
   if (formStarted) {
-    dataLayer.push({
+    window.dataLayer.push({
       event: "form_abandon",
       form_name: "contact_form"
     });
