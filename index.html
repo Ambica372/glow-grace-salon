@@ -57,6 +57,7 @@ nav a {
   border: none;
   background: #ff4d6d;
   color: white;
+  cursor: pointer;
 }
 
 .contact {
@@ -70,31 +71,44 @@ input {
   padding: 10px;
 }
 
+#btn-download {
+  margin-top: 20px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 25px;
+  background: #d6336c;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
 footer {
   background: #111;
   color: white;
   text-align: center;
   padding: 20px;
 }
+
+footer a {
+  color: white;
+  margin: 0 10px;
+}
 </style>
 
-  <!-- Google Tag Manager -->
+<!-- GTM -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-T8K6STKN');</script>
-<!-- End Google Tag Manager -->
+
 </head>
 
-
-  
 <body>
-<!-- Google Tag Manager (noscript) -->
+
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T8K6STKN"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<!-- End Google Tag Manager (noscript) -->
-  
+
 <header>
   <h2>Glow & Grace</h2>
   <nav>
@@ -109,7 +123,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </section>
 
 <section class="services">
-
 <div class="cards">
 
 <div class="card">
@@ -128,7 +141,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 
 </div>
-
 </section>
 
 <section class="contact">
@@ -141,65 +153,36 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <button type="submit">Submit</button>
 </form>
 
-
-
-
-  <!-- ================= NEW ELEMENTS ================= -->
-
 <h3>Salon Tour</h3>
 
-<!-- ✅ WORKING YOUTUBE VIDEO -->
-<iframe 
-  width="560" 
-  height="315"
-  src="https://www.youtube.com/embed/3JZ_D3ELwOQ"
-  title="Salon Experience"
-  frameborder="0"
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-  allowfullscreen>
-</iframe>
+<!-- YOUTUBE -->
+<iframe width="560" height="315"
+src="https://www.youtube.com/embed/3JZ_D3ELwOQ"
+allowfullscreen></iframe>
 
-<!-- ✅ WORKING HTML VIDEO -->
+<!-- HTML VIDEO -->
 <video width="500" controls>
-  <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-  Your browser does not support the video tag.
+<source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
 </video>
 
 <!-- DOWNLOAD BUTTON -->
-<button id="btn-download">
-Download Brochure
-</button>
+<button id="btn-download">Download Brochure</button>
 
 </section>
 
 <footer>
 <p>Follow us</p>
-
-<!-- OUTBOUND LINKS -->
 <a href="https://instagram.com" target="_blank">Instagram</a>
 <a href="https://facebook.com" target="_blank">Facebook</a>
 <a href="https://youtube.com" target="_blank">YouTube</a>
-
 </footer>
 
-  
-<footer>
-<p>Follow us</p>
-</footer>
-
-<!-- ================= DATA LAYER ================= -->
+<!-- DATA LAYER -->
 <script>
 window.dataLayer = window.dataLayer || [];
 </script>
 
-<!-- ================= ALERT FUNCTION ================= -->
-<script>
-function showAlert(serviceName) {
-  alert("Clicked: " + serviceName);
-}
-</script>
-
-<!-- ================= SERVICE TRACKING ================= -->
+<!-- SERVICE CLICK -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -208,7 +191,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const serviceName = this.getAttribute("data-service");
 
-      showAlert(serviceName);
+      alert("Clicked: " + serviceName);
 
       dataLayer.push({
         event: "service_click",
@@ -221,20 +204,32 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
-<!-- ================= FORM TRACKING ================= -->
+<!-- DOWNLOAD CLICK -->
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-  window.dataLayer = window.dataLayer || [];
+  const btn = document.getElementById("btn-download");
+
+  btn.addEventListener("click", function () {
+
+    alert("Downloading brochure...");
+
+    window.open("https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf");
+
+  });
+
+});
+</script>
+
+<!-- FORM TRACKING -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
   const form = document.getElementById("contact-form");
 
   let formStarted = false;
   let formSubmitted = false;
 
-  /* =========================
-  1. FORM START (FIRST INTERACTION)
-  ========================= */
   form.addEventListener("focusin", function () {
     if (!formStarted) {
       formStarted = true;
@@ -246,43 +241,27 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-
-  /* =========================
-  2. FIELD FOCUS
-  ========================= */
   document.querySelectorAll("#contact-form input").forEach(input => {
     input.addEventListener("focus", function () {
-
       dataLayer.push({
         event: "field_focus",
-        field_name: this.name || this.placeholder,
+        field_name: this.name,
         form_name: "contact_form"
       });
-
     });
   });
 
-
-  /* =========================
-  3. FORM ERROR (VALIDATION)
-  ========================= */
   document.querySelectorAll("#contact-form input").forEach(input => {
     input.addEventListener("invalid", function () {
-
       dataLayer.push({
         event: "form_error",
-        field_name: this.name || this.placeholder,
+        field_name: this.name,
         form_name: "contact_form"
       });
-
     });
   });
 
-
-  /* =========================
-  4. FORM SUBMIT
-  ========================= */
-  form.addEventListener("submit", function (e) {
+  form.addEventListener("submit", function () {
 
     formSubmitted = true;
 
@@ -291,26 +270,15 @@ document.addEventListener("DOMContentLoaded", function () {
       form_name: "contact_form"
     });
 
-    // OPTIONAL: keep this ONLY if you want to stop page reload
-    // e.preventDefault();
-
   });
 
-
-  /* =========================
-  5. FORM ABANDON (FIXED LOGIC)
-  ========================= */
   window.addEventListener("beforeunload", function () {
-
     if (formStarted && !formSubmitted) {
-
       dataLayer.push({
         event: "form_abandon",
         form_name: "contact_form"
       });
-
     }
-
   });
 
 });
