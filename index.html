@@ -236,6 +236,7 @@ document.addEventListener("DOMContentLoaded", function () {
       dataLayer.push({
         event: "form_interaction",
         form_name: "contact_form"
+        form_status:"form_start"
       });
     }
   });
@@ -246,6 +247,7 @@ document.addEventListener("DOMContentLoaded", function () {
         event: "form_interaction",
         field_name: this.name,
         form_name: "contact_form"
+         form_status:"form_field_focus"
       });
     });
   });
@@ -256,6 +258,7 @@ document.addEventListener("DOMContentLoaded", function () {
         event: "form_interaction",
         field_name: this.name,
         form_name: "contact_form"
+         form_status:"form_error"
       });
     });
   });
@@ -267,6 +270,7 @@ document.addEventListener("DOMContentLoaded", function () {
     dataLayer.push({
       event: "form_interaction",
       form_name: "contact_form"
+       form_status:"form_submit"
     });
 
   });
@@ -276,6 +280,7 @@ document.addEventListener("DOMContentLoaded", function () {
       dataLayer.push({
         event: "form_interaction",
         form_name: "contact_form"
+         form_status:"form_abandon"
       });
     }
   });
