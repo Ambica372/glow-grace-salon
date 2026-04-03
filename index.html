@@ -84,9 +84,9 @@ footer {
 <header>
   <h2>Glow & Grace</h2>
   <nav>
-    <a href="#home">Home</a>
-    <a href="#services">Services</a>
-    <a href="#contact">Contact</a>
+    <a href="#">Home</a>
+    <a href="#">Services</a>
+    <a href="#">Contact</a>
   </nav>
 </header>
 
@@ -147,76 +147,77 @@ function showAlert(serviceName) {
 
 <!-- ================= SERVICE TRACKING ================= -->
 <script>
-document.querySelectorAll(".btn-book").forEach(button => {
-  button.addEventListener("click", function () {
+document.addEventListener("DOMContentLoaded", function () {
 
-    const serviceName = this.getAttribute("data-service");
+  document.querySelectorAll(".btn-book").forEach(button => {
+    button.addEventListener("click", function () {
 
-    showAlert(serviceName); // separated function
+      const serviceName = this.getAttribute("data-service");
 
-    dataLayer.push({
-      event: "service_click",
-      service_name: serviceName
+      showAlert(serviceName);
+
+      dataLayer.push({
+        event: "service_click",
+        service_name: serviceName
+      });
+
     });
-
   });
+
 });
 </script>
 
 <!-- ================= FORM TRACKING ================= -->
 <script>
-const form = document.getElementById("contact-form");
-let formStarted = false;
+document.addEventListener("DOMContentLoaded", function () {
 
-/* FORM START */
-form.addEventListener("focusin", function () {
-  if (!formStarted) {
-    formStarted = true;
-    dataLayer.push({
-      event: "form_start",
-      form_name: "contact_form"
+  const form = document.getElementById("contact-form");
+  let formStarted = false;
+
+  form.addEventListener("focusin", function () {
+    if (!formStarted) {
+      formStarted = true;
+      dataLayer.push({
+        event: "form_start",
+        form_name: "contact_form"
+      });
+    }
+  });
+
+  document.querySelectorAll("#contact-form input").forEach(input => {
+    input.addEventListener("focus", function () {
+      dataLayer.push({
+        event: "field_focus",
+        field_name: this.name,
+        form_name: "contact_form"
+      });
     });
-  }
-});
 
-/* FIELD FOCUS */
-document.querySelectorAll("#contact-form input").forEach(input => {
-  input.addEventListener("focus", function () {
+    input.addEventListener("invalid", function () {
+      dataLayer.push({
+        event: "form_error",
+        field_name: this.name,
+        form_name: "contact_form"
+      });
+    });
+  });
+
+  form.addEventListener("submit", function () {
     dataLayer.push({
-      event: "field_focus",
-      field_name: this.name,
+      event: "form_submit",
       form_name: "contact_form"
     });
   });
-});
 
-/* ERROR */
-document.querySelectorAll("#contact-form input").forEach(input => {
-  input.addEventListener("invalid", function () {
-    dataLayer.push({
-      event: "form_error",
-      field_name: this.name,
-      form_name: "contact_form"
-    });
+  window.addEventListener("beforeunload", function () {
+    if (formStarted) {
+      dataLayer.push({
+        event: "form_abandon",
+        form_name: "contact_form"
+      });
+    }
   });
-});
 
-/* SUBMIT */
-form.addEventListener("submit", function () {
-  dataLayer.push({
-    event: "form_submit",
-    form_name: "contact_form"
-  });
-});
-
-/* ABANDON */
-window.addEventListener("beforeunload", function () {
-  if (formStarted) {
-    dataLayer.push({
-      event: "form_abandon",
-      form_name: "contact_form"
-    });
-  }
 });
 </script>
 
