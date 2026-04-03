@@ -276,10 +276,38 @@ function trackService(serviceName) {
   });
 }
 </script>
-<script>
+
+
+  <script>
+function trackFormStart() {
+  window.dataLayer = window.dataLayer || [];
+  dataLayer.push({
+    event: "form_start",
+    form_name: "contact_form"
+  });
+}
+
+function trackFieldFocus(fieldName) {
+  window.dataLayer = window.dataLayer || [];
+  dataLayer.push({
+    event: "field_focus",
+    field_name: fieldName,
+    form_name: "contact_form"
+  });
+}
+
+function trackFormError(errorField) {
+  window.dataLayer = window.dataLayer || [];
+  dataLayer.push({
+    event: "form_error",
+    field_name: errorField,
+    form_name: "contact_form"
+  });
+}
+
 function trackFormSubmit() {
   window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({
+  dataLayer.push({
     event: "form_submit",
     form_name: "contact_form"
   });
