@@ -185,12 +185,20 @@ document.addEventListener("DOMContentLoaded", function () {
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-  const form = document.getElementById("contact-form");
-  let formStarted = false;
+  window.dataLayer = window.dataLayer || [];
 
+  const form = document.getElementById("contact-form");
+
+  let formStarted = false;
+  let formSubmitted = false;
+
+  /* =========================
+  1. FORM START (FIRST INTERACTION)
+  ========================= */
   form.addEventListener("focusin", function () {
     if (!formStarted) {
       formStarted = true;
+
       dataLayer.push({
         event: "form_start",
         form_name: "contact_form"
@@ -198,38 +206,71 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+
+  /* =========================
+  2. FIELD FOCUS
+  ========================= */
   document.querySelectorAll("#contact-form input").forEach(input => {
     input.addEventListener("focus", function () {
+
       dataLayer.push({
         event: "field_focus",
-        field_name: this.name,
+        field_name: this.name || this.placeholder,
         form_name: "contact_form"
       });
-    });
 
-    input.addEventListener("invalid", function () {
-      dataLayer.push({
-        event: "form_error",
-        field_name: this.name,
-        form_name: "contact_form"
-      });
     });
   });
 
-  form.addEventListener("submit", function () {
+
+  /* =========================
+  3. FORM ERROR (VALIDATION)
+  ========================= */
+  document.querySelectorAll("#contact-form input").forEach(input => {
+    input.addEventListener("invalid", function () {
+
+      dataLayer.push({
+        event: "form_error",
+        field_name: this.name || this.placeholder,
+        form_name: "contact_form"
+      });
+
+    });
+  });
+
+
+  /* =========================
+  4. FORM SUBMIT
+  ========================= */
+  form.addEventListener("submit", function (e) {
+
+    formSubmitted = true;
+
     dataLayer.push({
       event: "form_submit",
       form_name: "contact_form"
     });
+
+    // OPTIONAL: keep this ONLY if you want to stop page reload
+    // e.preventDefault();
+
   });
 
+
+  /* =========================
+  5. FORM ABANDON (FIXED LOGIC)
+  ========================= */
   window.addEventListener("beforeunload", function () {
-    if (formStarted) {
+
+    if (formStarted && !formSubmitted) {
+
       dataLayer.push({
         event: "form_abandon",
         form_name: "contact_form"
       });
+
     }
+
   });
 
 });
