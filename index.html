@@ -284,71 +284,100 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 
-
-  <script>
+<script>
 document.addEventListener("DOMContentLoaded", function () {
 
   const video = document.getElementById("custom-video");
 
-  if (!video) return;
+  if (!video) {
+    console.log("Video not found");
+    return;
+  }
 
   let progress25 = false;
   let progress50 = false;
   let progress75 = false;
 
-  // ▶️ PLAY
+  /* =========================
+  ▶️ PLAY
+  ========================= */
   video.addEventListener("play", function () {
+
     dataLayer.push({
-      event: "video_play",
+      event: "video_custom",
+      video_status: "play",
       video_name: "custom_video"
     });
+
   });
 
-  // ⏸️ PAUSE
+  /* =========================
+  ⏸️ PAUSE
+  ========================= */
   video.addEventListener("pause", function () {
+
     dataLayer.push({
-      event: "video_pause",
+      event: "video_custom",
+      video_status: "pause",
       video_name: "custom_video"
     });
+
   });
 
-  // ⏱️ PROGRESS
+  /* =========================
+  ⏱️ PROGRESS
+  ========================= */
   video.addEventListener("timeupdate", function () {
 
     const percent = (video.currentTime / video.duration) * 100;
 
     if (percent >= 25 && !progress25) {
       progress25 = true;
+
       dataLayer.push({
-        event: "video_progress",
+        event: "video_custom",
+        video_status: "progress",
+        video_name: "custom_video",
         video_percent: 25
       });
     }
 
     if (percent >= 50 && !progress50) {
       progress50 = true;
+
       dataLayer.push({
-        event: "video_progress",
+        event: "video_custom",
+        video_status: "progress",
+        video_name: "custom_video",
         video_percent: 50
       });
     }
 
     if (percent >= 75 && !progress75) {
       progress75 = true;
+
       dataLayer.push({
-        event: "video_progress",
+        event: "video_custom",
+        video_status: "progress",
+        video_name: "custom_video",
         video_percent: 75
       });
     }
 
   });
 
-  // ✅ COMPLETE
+  /* =========================
+  ✅ COMPLETE
+  ========================= */
   video.addEventListener("ended", function () {
+
     dataLayer.push({
-      event: "video_complete",
-      video_name: "custom_video"
+      event: "video_custom",
+      video_status: "complete",
+      video_name: "custom_video",
+      video_percent: 100
     });
+
   });
 
 });
