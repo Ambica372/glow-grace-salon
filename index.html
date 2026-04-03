@@ -278,42 +278,78 @@ function trackService(serviceName) {
 </script>
 
 
-  <script>
-function trackFormStart() {
-  window.dataLayer = window.dataLayer || [];
-  dataLayer.push({
-    event: "form_start",
-    form_name: "contact_form"
-  });
-}
+<script>
+window.dataLayer = window.dataLayer || [];
 
-function trackFieldFocus(fieldName) {
-  window.dataLayer = window.dataLayer || [];
-  dataLayer.push({
-    event: "field_focus",
-    field_name: fieldName,
-    form_name: "contact_form"
-  });
-}
+const form = document.getElementById("contact-form");
+let formStarted = false;
 
-function trackFormError(errorField) {
-  window.dataLayer = window.dataLayer || [];
-  dataLayer.push({
-    event: "form_error",
-    field_name: errorField,
-    form_name: "contact_form"
-  });
-}
+/* =========================
+1. FORM START
+========================= */
+form.addEventListener("focusin", function () {
+  if (!formStarted) {
+    formStarted = true;
 
-function trackFormSubmit() {
-  window.dataLayer = window.dataLayer || [];
+    dataLayer.push({
+      event: "form_start",
+      form_name: "contact_form"
+    });
+  }
+});
+
+
+/* =========================
+2. FIELD FOCUS
+========================= */
+document.querySelectorAll("#contact-form input").forEach(input => {
+  input.addEventListener("focus", function () {
+    dataLayer.push({
+      event: "field_focus",
+      field_name: this.name || this.placeholder,
+      form_name: "contact_form"
+    });
+  });
+});
+
+
+/* =========================
+3. FORM ERROR
+========================= */
+document.querySelectorAll("#contact-form input").forEach(input => {
+  input.addEventListener("invalid", function () {
+    dataLayer.push({
+      event: "form_error",
+      field_name: this.name || this.placeholder,
+      form_name: "contact_form"
+    });
+  });
+});
+
+
+/* =========================
+4. FORM SUBMIT
+========================= */
+form.addEventListener("submit", function () {
   dataLayer.push({
     event: "form_submit",
     form_name: "contact_form"
   });
-}
+});
+
+
+/* =========================
+5. FORM ABANDON
+========================= */
+window.addEventListener("beforeunload", function () {
+  if (formStarted) {
+    dataLayer.push({
+      event: "form_abandon",
+      form_name: "contact_form"
+    });
+  }
+});
 </script>
-  
 </body>
 </html>
 
