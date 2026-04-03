@@ -221,20 +221,21 @@ document.addEventListener("DOMContentLoaded", function () {
 </script>
 
 
-  <script>
+<script>
 document.addEventListener("DOMContentLoaded", function () {
+
+  window.dataLayer = window.dataLayer || [];
 
   const form = document.getElementById("contact-form");
 
-  if (!form) {
-    console.log("Form not found");
-    return;
-  }
+  if (!form) return;
 
   let formStarted = false;
   let formSubmitted = false;
 
-  // START
+  /* =========================
+  1. FORM START
+  ========================= */
   form.addEventListener("focusin", function () {
     if (!formStarted) {
       formStarted = true;
@@ -247,32 +248,43 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // FIELD FOCUS
+  /* =========================
+  2. FIELD FOCUS
+  ========================= */
   document.querySelectorAll("#contact-form input").forEach(input => {
     input.addEventListener("focus", function () {
+
       dataLayer.push({
         event: "form_interaction",
-        field_name: this.name,
         form_name: "contact_form",
+        field_name: this.name || this.placeholder,
         form_status: "focus"
       });
+
     });
   });
 
-  // ERROR
+  /* =========================
+  3. FORM ERROR
+  ========================= */
   document.querySelectorAll("#contact-form input").forEach(input => {
     input.addEventListener("invalid", function () {
+
       dataLayer.push({
         event: "form_interaction",
-        field_name: this.name,
         form_name: "contact_form",
+        field_name: this.name || this.placeholder,
         form_status: "error"
       });
+
     });
   });
 
-  // SUBMIT
+  /* =========================
+  4. FORM SUBMIT
+  ========================= */
   form.addEventListener("submit", function () {
+
     formSubmitted = true;
 
     dataLayer.push({
@@ -280,21 +292,28 @@ document.addEventListener("DOMContentLoaded", function () {
       form_name: "contact_form",
       form_status: "submit"
     });
+
   });
 
-  // ABANDON
+  /* =========================
+  5. FORM ABANDON
+  ========================= */
   window.addEventListener("beforeunload", function () {
+
     if (formStarted && !formSubmitted) {
+
       dataLayer.push({
         event: "form_interaction",
         form_name: "contact_form",
         form_status: "abandon"
       });
+
     }
+
   });
 
 });
-  </script>
+</script>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
