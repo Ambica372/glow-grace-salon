@@ -283,5 +283,77 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
+
+
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const video = document.getElementById("custom-video");
+
+  if (!video) return;
+
+  let progress25 = false;
+  let progress50 = false;
+  let progress75 = false;
+
+  // ▶️ PLAY
+  video.addEventListener("play", function () {
+    dataLayer.push({
+      event: "video_play",
+      video_name: "custom_video"
+    });
+  });
+
+  // ⏸️ PAUSE
+  video.addEventListener("pause", function () {
+    dataLayer.push({
+      event: "video_pause",
+      video_name: "custom_video"
+    });
+  });
+
+  // ⏱️ PROGRESS
+  video.addEventListener("timeupdate", function () {
+
+    const percent = (video.currentTime / video.duration) * 100;
+
+    if (percent >= 25 && !progress25) {
+      progress25 = true;
+      dataLayer.push({
+        event: "video_progress",
+        video_percent: 25
+      });
+    }
+
+    if (percent >= 50 && !progress50) {
+      progress50 = true;
+      dataLayer.push({
+        event: "video_progress",
+        video_percent: 50
+      });
+    }
+
+    if (percent >= 75 && !progress75) {
+      progress75 = true;
+      dataLayer.push({
+        event: "video_progress",
+        video_percent: 75
+      });
+    }
+
+  });
+
+  // ✅ COMPLETE
+  video.addEventListener("ended", function () {
+    dataLayer.push({
+      event: "video_complete",
+      video_name: "custom_video"
+    });
+  });
+
+});
+</script>
+
+  
 </body>
 </html>
