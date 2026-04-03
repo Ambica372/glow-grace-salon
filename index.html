@@ -12,7 +12,6 @@ body {
   background: linear-gradient(135deg, #ffe4ec, #ffc2d1);
 }
 
-/* NAV */
 header {
   background: #111;
   color: white;
@@ -27,7 +26,6 @@ nav a {
   text-decoration: none;
 }
 
-/* HERO */
 .hero {
   height: 80vh;
   background: url("https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9") center/cover;
@@ -37,7 +35,6 @@ nav a {
   color: white;
 }
 
-/* SERVICES */
 .cards {
   display: flex;
   justify-content: center;
@@ -62,7 +59,6 @@ nav a {
   color: white;
 }
 
-/* CONTACT */
 .contact {
   text-align: center;
   padding: 40px;
@@ -74,7 +70,6 @@ input {
   padding: 10px;
 }
 
-/* FOOTER */
 footer {
   background: #111;
   color: white;
@@ -139,18 +134,25 @@ footer {
 </footer>
 
 <!-- ================= DATA LAYER ================= -->
-
 <script>
 window.dataLayer = window.dataLayer || [];
 </script>
 
-<!-- ================= SERVICE TRACKING ================= -->
+<!-- ================= ALERT FUNCTION ================= -->
+<script>
+function showAlert(serviceName) {
+  alert("Clicked: " + serviceName);
+}
+</script>
 
+<!-- ================= SERVICE TRACKING ================= -->
 <script>
 document.querySelectorAll(".btn-book").forEach(button => {
   button.addEventListener("click", function () {
 
     const serviceName = this.getAttribute("data-service");
+
+    showAlert(serviceName); // separated function
 
     dataLayer.push({
       event: "service_click",
@@ -162,7 +164,6 @@ document.querySelectorAll(".btn-book").forEach(button => {
 </script>
 
 <!-- ================= FORM TRACKING ================= -->
-
 <script>
 const form = document.getElementById("contact-form");
 let formStarted = false;
@@ -171,7 +172,6 @@ let formStarted = false;
 form.addEventListener("focusin", function () {
   if (!formStarted) {
     formStarted = true;
-
     dataLayer.push({
       event: "form_start",
       form_name: "contact_form"
